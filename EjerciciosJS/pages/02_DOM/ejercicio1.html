@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ejercicio 1 - DOM</title>
+
+    //CSS
+    <link rel='stylesheet' href='../../assets/css/style.css'>
+</head>
+<body>
+<h1>Ejercicio 1 - Operaciones Matematicas</h1>
+
+<p>Ingrese números de forma indefinida. Finalice con 0:</p>
+
+<input type="number" id="primer_numero">
+<input type="number" id="segundo_numero">
+<button onclick="sumar()">+</button>
+<button onclick="restar()">-</button>
+<button onclick="multiplicar()">X</button>
+<button onclick="dividir()">/</button>
+<input style="display: block; margin-top: 10px; margin-bottom: 10px; font-size: 2rem" type="text" value="Resultado" id="resultado" disabled>
+
+<!--<p id="resultado"></p>-->
+
+<a href="../../index.html">Volver</a>
+
+<h2>Código JavaScript:</h2>
+<pre><code id="codigo-js">
+// Variable para mostrar el resultado de todas las operaciones
+let resultado;
+
+// Funcion que muestra el resultado en el HTML
+function mostrarResultado() {
+    let resultadoInput = document.getElementById('resultado');
+    resultadoInput.removeAttribute('disabled');
+    resultadoInput.value = resultado;
+    resultadoInput.setAttribute('disabled', 'disabled');
+}
+
+// Funcion para sumar 2 numeros
+function sumar() {
+    let n1 = parseFloat(document.getElementById('primer_numero').value);
+    let n2 = parseFloat(document.getElementById('segundo_numero').value);
+
+    resultado = n1 + n2;
+
+    mostrarResultado();
+}
+
+// Funcion para restar 2 numeros
+function restar() {
+    let n1 = parseFloat(document.getElementById('primer_numero').value);
+    let n2 = parseFloat(document.getElementById('segundo_numero').value);
+
+    resultado = n1 - n2;
+
+    mostrarResultado();
+}
+
+// Funcion para multiplicar 2 numeros
+function multiplicar() {
+    let n1 = parseFloat(document.getElementById('primer_numero').value);
+    let n2 = parseFloat(document.getElementById('segundo_numero').value);
+
+    resultado = n1 * n2;
+
+    mostrarResultado();
+}
+
+// Funcion para dividir 2 numeros
+function dividir() {
+    let n1 = parseFloat(document.getElementById('primer_numero').value);
+    let n2 = parseFloat(document.getElementById('segundo_numero').value);
+
+    // Verificar si el segundo número es 0
+    if (n2 === 0) {
+        resultado = 'No se puede dividir por 0';
+        mostrarResultado();
+        return;
+    }
+    resultado = n1 / n2;
+
+    mostrarResultado();
+}
+    </code></pre>
+
+<script src="../../assets/js/02_DOM/ejercicio1.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 - JavaScript</title>
+
+    //CSS
+    <link rel='stylesheet' href='../../assets/css/style.css'>
+</head>
+<body>
+<h1>Ejercicio 1 - Determinar qué número es mayor</h1>
+
+
+<p>Ingrese dos números para determinar cuál es mayor:</p>
+
+<label for="numero1">Número 1:</label>
+<input type="number" id="numero1">
+
+<label for="numero2">Número 2:</label>
+<input type="number" id="numero2">
+
+<button onclick="calcularMayor()">Calcular</button>
+
+<p id="resultado"></p>
+
+<a href="../../index.html">Volver</a>
+
+<h2>Código JavaScript:</h2>
+<pre><code id="codigo-js">
+function calcularMayor() {
+    // Obtener los valores ingresados por el usuario
+    var numero1 = parseFloat(document.getElementById('numero1').value);
+    var numero2 = parseFloat(document.getElementById('numero2').value);
+
+    // Verificar si ambos valores son numéricos
+    if (isNaN(numero1 + numero2)) {
+        // Mostrar mensaje de error si alguno de los valores no es numérico
+        document.getElementById('resultado').textContent = 'Por favor, ingrese valores numéricos válidos.';
+    } else {
+        // Comparar los números y mostrar el resultado
+        if (numero1 > numero2) {
+            document.getElementById('resultado').textContent = `El número (${numero1}) es mayor que el número (${numero2})`;
+        } else if (numero2 > numero1) {
+            document.getElementById('resultado').textContent = `El número (${numero2}) es mayor que el número (${numero1}).`;
+        } else {
+            document.getElementById('resultado').textContent = 'Ambos números son iguales.';
+        }
+    }
+}
+    </code></pre>
+
+<script src="../../assets/js/01_intro/ejercicio1.js"></script>
+</body>
+</html>

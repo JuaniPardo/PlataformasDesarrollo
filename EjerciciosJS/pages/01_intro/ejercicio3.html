@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 3 - JavaScript</title>
+
+    //CSS
+    <link rel='stylesheet' href='../../assets/css/style.css'>
+</head>
+<body>
+<h1>Ejercicio 3 - Operaciones con Array de Empleados</h1>
+
+<p>
+    <label for="area">Área:</label>
+    <input type="text" id="area">
+    <button onclick="filtrarEmpleadosPorArea()">Filtrar por Área</button>
+</p>
+
+<p>
+    <label for="legajo">Legajo:</label>
+    <input type="number" id="legajo">
+    <button onclick="buscarEmpleadoPorLegajo()">Buscar por Legajo</button>
+</p>
+
+<p>
+    <label for="legajoJefe">Legajo del Jefe:</label>
+    <input type="number" id="legajoJefe">
+    <button onclick="buscarJefePorLegajo()">Buscar Jefe por Legajo</button>
+</p>
+
+<button onclick="calcularPromedioSalarios()">Calcular Promedio de Salarios</button>
+<br><br>
+<div id="promedio"></div>
+<br>
+<a href="../../index.html">Volver</a>
+<br>
+<div id="resultado"></div>
+
+<script src="../../assets/js/01_intro/ejercicio3.js"></script>
+</body>
+</html>
