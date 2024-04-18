@@ -8,7 +8,11 @@
     <title>Ejercicio 2 | DOM</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
 </head>
 <body>
 <h1>Ejercicio 2 - Selector de Sabores</h1>
@@ -26,7 +30,7 @@
 
 <h2>Código JavaScript:</h2>
 <pre>
-    <code id="codigo-js">
+    <code class="language-javascript" id="codigo-js">
 const helados = [
     'Chocolate con almendras',
     'Dulce de leche granizado',
@@ -71,5 +75,11 @@ function combinar() {
 
 
 <script src="../../assets/js/02_DOM/ejercicio2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Prism.highlightAll();
+    });
+</script>
 </body>
 </html>

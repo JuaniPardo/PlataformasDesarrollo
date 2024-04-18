@@ -6,7 +6,11 @@
     <title>Ejercicio 3 - JavaScript</title>
 
     <!-- CSS -->
-    <link rel='stylesheet' href='../../assets/css/style.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
 </head>
 <body>
 <h1>Ejercicio 3 - Operaciones con Array de Empleados</h1>
@@ -37,6 +41,74 @@
 <br>
 <div id="resultado"></div>
 
+<pre>
+    <code class="language-javascript" id="codigo-js">
+import {empleados} from "./empleados";
+
+// Función para filtrar empleados por área
+function filtrarEmpleadosPorArea() {
+    const area = document.getElementById('area').value;
+    const empleadosFiltrados = empleados.filter(empleado => empleado.area.toLowerCase() === area.toLowerCase());
+
+    mostrarResultado(empleadosFiltrados);
+}
+
+// Función para buscar empleado por legajo
+function buscarEmpleadoPorLegajo() {
+    const legajo = parseInt(document.getElementById('legajo').value);
+    const empleadoEncontrado = empleados.find(empleado => empleado.legajo === legajo);
+
+    mostrarResultado(empleadoEncontrado ? [empleadoEncontrado] : []);
+}
+
+// Función para buscar jefe por legajo
+function buscarJefePorLegajo() {
+    const legajoJefe = parseInt(document.getElementById('legajoJefe').value);
+    const empleadoJefe = empleados.find(empleado => empleado.a_cargo.includes(legajoJefe));
+
+    mostrarResultado(empleadoJefe ? [empleadoJefe] : null);
+}
+
+// Función para calcular promedio de salarios
+function calcularPromedioSalarios() {
+    const totalSalarios = empleados.reduce((acc, empleado) => acc + empleado.salario, 0);
+    const promedio = totalSalarios / empleados.length;
+
+    document.getElementById('promedio').textContent = `Promedio de salarios: ${promedio.toFixed(2)}`;
+}
+
+// Función para mostrar el resultado en la página
+function mostrarResultado(resultado) {
+    const resultadoDiv = document.getElementById('resultado');
+    resultadoDiv.innerHTML = ''; // Limpiar contenido anterior
+
+    if (resultado.length === 0) {
+        resultadoDiv.textContent = 'No se encontraron empleados.';
+        return;
+    }
+
+    resultado.forEach(empleado => {
+        const empleadoDiv = document.createElement('div');
+empleadoDiv.innerHTML = `&lt;p&gt;Legajo: ${empleado.legajo}&lt;/p&gt;
+                          &lt;p&gt;Nombre: ${empleado.nombre}&lt;/p&gt;
+                          &lt;p&gt;Apellido: ${empleado.apellido}&lt;/p&gt;
+                          &lt;p&gt;Salario: ${empleado.salario}&lt;/p&gt;
+                          &lt;p&gt;Área: ${empleado.area}&lt;/p&gt;
+                          &lt;p&gt;A cargo: ${empleado.a_cargo.length > 0 ? empleado.a_cargo.join(', ') : 'Ninguno'}&lt;/p&gt;
+                          &lt;hr&gt;`;
+resultadoDiv.appendChild(empleadoDiv);
+    });
+}
+
+    </code>
+</pre>
+
 <script src="../../assets/js/01_intro/ejercicio3.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Prism.highlightAll();
+    });
+</script>
 </body>
 </html>

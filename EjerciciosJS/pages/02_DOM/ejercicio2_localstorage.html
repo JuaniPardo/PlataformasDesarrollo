@@ -59,16 +59,17 @@ console.table(arrayHelados); // Muestro en consola
 console.info('⬆️ Array de Datos con LocalStorage (si existe) ⬆️')
 // Listado es el div donde muestro los sabores
 const listado = document.querySelector('#sabores');
-let markup = ''; // Creo una variable para guardar el html
 
-arrayHelados.forEach((helado) => { // Recorro el array de helados generando el html
-    markup +=
+// Funcion para generar los checkbox
+function generarHTML(helado) {
+    return `
+        &lt;label class=&quot;seleccionable&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; value=&quot;${helado.sabor}&quot; ${helado.seleccionado ? 'checked' : ''}&gt;
+            ${helado.sabor}
+        &lt;/label&gt;
     `
-    &lt;label&gt;
-        &lt;input type="checkbox" value="${helado.sabor}" ${helado.seleccionado ? 'checked' : ''}&gt;
-        ${helado.sabor}
-    &lt;/label&gt;
-    `;
+}
+const markup = arrayHelados.map((helado) => generarHTML(helado)).join('')
 
 listado.innerHTML = markup; // Muestro el html generado en el div
 
@@ -132,7 +133,6 @@ function borrar_seleccion() {
 }
     </code>
 </pre>
-
 
 <script type="module" src="../../assets/js/02_DOM/ejercicio2-localstorage.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>

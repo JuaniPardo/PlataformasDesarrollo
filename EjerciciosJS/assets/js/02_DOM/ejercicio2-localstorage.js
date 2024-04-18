@@ -24,17 +24,17 @@ console.table(arrayHelados); // Muestro en consola
 console.info('⬆️ Array de Datos con LocalStorage (si existe) ⬆️')
 
 const listado = document.querySelector('#sabores'); // Listado es el div donde muestro los sabores
-let markup = ''; // Creo una variable para guardar el html
 
-arrayHelados.forEach((helado) => { // Recorro el array de helados generando el html
-    markup +=
-        `
-        <label>
+// Funcion para generar los checkbox
+function generarHTML(helado) {
+    return `
+        <label class="seleccionable">
             <input type="checkbox" value="${helado.sabor}" ${helado.seleccionado ? 'checked' : ''}>
             ${helado.sabor}
         </label>
-        `
-});
+    `
+}
+const markup = arrayHelados.map((helado) => generarHTML(helado)).join('')
 listado.innerHTML = markup; // Muestro el html generado en el div
 
 const boton_submit = document.querySelector('#submit');

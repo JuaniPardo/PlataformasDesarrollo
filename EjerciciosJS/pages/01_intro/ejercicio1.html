@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejercicio 1 - JavaScript</title>
 
-    <!--CSS-->
-    <link rel='stylesheet' href='../../assets/css/style.css'>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
 </head>
 <body>
 <h1>Ejercicio 1 - Determinar qué número es mayor</h1>
@@ -27,7 +31,7 @@
 <a href="../../../index.html">Volver</a>
 
 <h2>Código JavaScript:</h2>
-<pre><code id="codigo-js">
+<pre><code class="language-javascript" id="codigo-js">
 function calcularMayor() {
     // Obtener los valores ingresados por el usuario
     var numero1 = parseFloat(document.getElementById('numero1').value);
@@ -51,5 +55,11 @@ function calcularMayor() {
     </code></pre>
 
 <script src="../../assets/js/01_intro/ejercicio1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Prism.highlightAll();
+    });
+</script>
 </body>
 </html>

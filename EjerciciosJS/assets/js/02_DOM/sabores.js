@@ -38,5 +38,5 @@ export const helados = [
     {
         sabor: 'Frutilla a la crema',
         seleccionado: false,
-    },
+    }
 ];

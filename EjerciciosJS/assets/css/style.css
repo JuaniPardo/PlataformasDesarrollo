@@ -16,6 +16,10 @@ pre {
 
 }
 
+.seleccionable {
+    margin-top: 5px;
+}
+
 #sabores {
     display: flex;
     flex-direction: column;
