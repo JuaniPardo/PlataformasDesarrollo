@@ -14,9 +14,11 @@
 <h1>Ejercicio 2 - Selector de Sabores</h1>
 
 <h2>Lista de Sabores <span style="color: #555; font-size: 1.2rem">(Elija hasta 4)</span></h2>
-<form action="#" id="sabores">
+<form action="#">
+    <div id="sabores">
 
-    <input type="submit" value="Combinar" onclick="combinar()">
+    </div>
+    <input class="Button mt-1" type="submit" value="Combinar" onclick="combinar()">
 </form>
 <p id="mensaje"></p>
 
@@ -39,15 +41,14 @@ const helados = [
 ];
 
 //Crear elementos input checkbox con los sabores de helado
-const sabores = document.getElementById('sabores');
-helados.forEach(sabor =>{
-    const label = document.createElement('label');
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.value = sabor;
-    label.append(checkbox, sabor);
-    sabores.append(document.createElement('br'), label)
-})
+const sabores = document.getElementById('sabores'); // Este es el div dentro del formulario
+const markup = helados.map((sabor) =>
+    `&lt;label&gt;
+        &lt;input type="checkbox" value="${sabor}"&gt;
+        ${sabor}
+    &lt;/label&gt;`).reduce((cadena, item) => cadena += item, '');
+
+sabores.innerHTML = markup;
 
 // Funcion con las validaciones que combinan los sabores
 function combinar() {

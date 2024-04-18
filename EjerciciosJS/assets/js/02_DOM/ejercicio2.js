@@ -12,15 +12,22 @@ const helados = [
 ];
 
 //Crear elementos input checkbox con los sabores de helado
-const sabores = document.getElementById('sabores');
-helados.forEach(sabor =>{
-    const label = document.createElement('label'); // Creo un label
-    const checkbox = document.createElement('input'); // Creo un checkbox
-    checkbox.type = 'checkbox';
-    checkbox.value = sabor; // Le paso el sabor al checkbox
-    label.append(checkbox, sabor); // Le meto el checkbox y el "Sabor" al label
-    sabores.append(document.createElement('br'), label) // Le meto un <br> y el label creado al form
-})
+const sabores = document.getElementById('sabores'); // Este es el div dentro del formulario
+const markup = helados.map((sabor) =>
+    `<label>
+        <input type="checkbox" value="${sabor}">
+        ${sabor}
+    </label>`).reduce((cadena, item) => cadena += item, '');
+
+sabores.innerHTML = markup;
+
+/*const label = document.createElement('label'); // Creo un label
+const checkbox = document.createElement('input'); // Creo un checkbox
+checkbox.type = 'checkbox';
+checkbox.value = sabor; // Le paso el sabor al checkbox
+label.append(checkbox, sabor); // Le meto el checkbox y el "Sabor" al label
+sabores.append(document.createElement('br'), label) // Le meto un <br> y el label creado al form*/
+
 
 // Funcion con las validaciones que combinan los sabores
 function combinar() {
@@ -33,12 +40,12 @@ function combinar() {
 
     if (seleccion.length < minimoSabores) {
         mensaje.textContent = 'Elija al menos un sabor';
-        mensaje.style.color = 'darkred';
+        mensaje.style.color = 'red';
     } else if (seleccion.length > maximoSabores) {
         mensaje.textContent = 'Elija hasta 4';
-        mensaje.style.color = 'darkred';
+        mensaje.style.color = 'red';
     } else {
         mensaje.textContent = 'Gracias';
-        mensaje.style.color = 'darkgreen';
+        mensaje.style.color = 'green';
     }
 }

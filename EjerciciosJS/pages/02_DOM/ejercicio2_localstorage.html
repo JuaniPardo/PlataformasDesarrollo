@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Ejercicio 2 | DOM</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+<h1>Ejercicio 2 - Selector de Sabores (localstorage)</h1>
+
+<h2>Lista de Sabores <span style="color: #999; font-size: 1.2rem">(Elija hasta 4)</span></h2>
+<form action="#">
+    <div id="sabores">
+
+    </div>
+
+    <input class="Button mt-1" type="submit" value="Combinar" id="submit">
+    <button class="Button mt-1 ms-1" type="button" id="borrar">Borrar</button>
+</form>
+<p id="mensaje" style="font-size: 1.2rem"></p>
+
+<a href="../../../index.html">Volver</a>
+
+<h2>Código JavaScript:</h2>
+<pre>
+    <code class="language-javascript" id="codigo-js">
+import {helados} from "./sabores.js";
+
+const arrayHelados = [...helados]; // Guardo una copia del array de helados
+
+console.table(arrayHelados); // Muestro en consola
+console.info('⬆️ Array de Datos importados ⬆️')
+
+if (localStorage.length > 0) { // Verifico si hay info guardada en localstorage
+    arrayHelados.forEach((helado) => { // Recorro el array de helados
+
+        for (let i = 0; i < localStorage.length; i++) { // Recorro el localstorage
+
+            const key = localStorage.key(i); // Guardo la key
+            const value = JSON.parse(localStorage.getItem(key)); // Guardo el value
+
+            if (key === helado.sabor) { // Si la key es igual al sabor del helado
+                helado.seleccionado = value; // Seteo el valor de seleccionado a true
+            }
+        }
+    });
+}
+
+console.table(arrayHelados); // Muestro en consola
+console.info('⬆️ Array de Datos con LocalStorage (si existe) ⬆️')
+// Listado es el div donde muestro los sabores
+const listado = document.querySelector('#sabores');
+let markup = ''; // Creo una variable para guardar el html
+
+arrayHelados.forEach((helado) => { // Recorro el array de helados generando el html
+    markup +=
+    `
+    &lt;label&gt;
+        &lt;input type="checkbox" value="${helado.sabor}" ${helado.seleccionado ? 'checked' : ''}&gt;
+        ${helado.sabor}
+    &lt;/label&gt;
+    `;
+
+listado.innerHTML = markup; // Muestro el html generado en el div
+
+const boton_submit = document.querySelector('#submit');
+boton_submit.addEventListener('click', (e) => {
+    e.preventDefault();
+    combinar();
+});
+
+function combinar() {
+    // Guardo los sabores seleccionados
+    const seleccion = document.querySelectorAll('input[type = checkbox]:checked')
+
+    seleccion.forEach((sabor) => console.log(sabor.value)); //Debugueo en consola la seleccion
+
+    const mensaje = document.querySelector('#mensaje') // Obtengo el elemento mensaje
+    // Seteo valores minimos y maximos
+    const minimoSabores = 1;
+    const maximoSabores = 4;
+
+    // Establezco la logica de seleccion
+    if (seleccion.length < minimoSabores) {
+        mensaje.textContent = `Elija como mínimo ${minimoSabores} sabores`;
+        mensaje.style.color = 'red';
+    } else if (seleccion.length > maximoSabores) {
+        mensaje.textContent = `Elija como máximo ${maximoSabores} sabores`;
+        mensaje.style.color = 'red';
+    } else {
+        mensaje.textContent = 'Gracias';
+        mensaje.style.color = 'green';
+        localStorage.clear(); // Borro el localstorage
+        seleccion.forEach((sabor) => {
+            localStorage.setItem(sabor.value, JSON.stringify(true))
+        });
+        console.log(localStorage); // Muestro en consola
+    }
+}
+
+// Recupero el boton de borrar
+const boton_borrar = document.querySelector('#borrar');
+boton_borrar.addEventListener('click',(e) => {
+    e.preventDefault();
+    borrar_seleccion();
+})
+
+// Funcion para borrar la seleccion
+function borrar_seleccion() {
+    if (confirm('¿Está seguro que desea borrar la selección?')) {
+        localStorage.clear(); // Borro el localstorage
+        arrayHelados.forEach((helado) => {
+            helado.seleccionado = false;
+        }); // Seteo todos los helados a no seleccionados
+        const checkboxes = document.querySelectorAll('input[type = checkbox]');
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+        }); // Desmarco todos los checkboxes
+        const mensaje = document.querySelector('#mensaje');
+        mensaje.textContent = 'Selección borrada';
+        mensaje.style.color = 'red';
+    }
+}
+    </code>
+</pre>
+
+
+<script type="module" src="../../assets/js/02_DOM/ejercicio2-localstorage.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Prism.highlightAll();
+    });
+</script>
+
+</body>
+</html>
