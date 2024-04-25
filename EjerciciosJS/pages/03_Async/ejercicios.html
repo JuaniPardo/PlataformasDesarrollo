@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,26 +8,54 @@
     <title>Ejercicio 1 - DOM</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="../../assets/css/style.css"/>
 </head>
 <body>
 <h1>Ejercicios - Asincronía</h1>
 
-<h2>Banco JS</h2>
+<h2 class="banco">Banco Vanilla JS</h2>
 
-<section>
-    <table>
-        <thead>
-            <th>Caja Nro</th>
-            <th>Atendida por</th>
-            <th>Atendiendo a</th>
-        </thead>
-        t
-    </table>
+<section class="cajas-clientes">
+    <div>
+        <div class="titulo">
+            <h3 style="text-align: center; font-size: 2rem; display: inline">CAJAS</h3>
+            <button class="Button ms-1 siguiente">
+                Atender Siguiente
+            </button>
+        </div>
+
+        <article class="tarjetas-banco">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Caja Nro 1</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Atendida por... -->
+                    <p>Atendida por <span class="cajero">Nombre del Cajero</span></p>
+                </div>
+                <div class="card-footer">
+                    <!-- Atendiendo a... -->
+                    <p>Atendiendo a <span class="cliente">Nombre del Cliente</span></p>
+                </div>
+            </div>
+        </article>
+    </div>
+    <div>
+        <h3 style="text-align: center; font-size: 2rem">COLA</h3>
+        <article class="tarjetas-clientes">
+            <div class="card">
+
+                <div class="card-footer">
+                    <p>Nro. Cliente / Nombre <span>1002: Pepito</span></p>
+                </div>
+            </div>
+
+        </article>
+    </div>
 </section>
 
 
@@ -35,15 +63,126 @@
 
 <h2>Código JavaScript:</h2>
 <pre><code class="language-javascript" id="codigo-js">
+import {cajas} from "./cajas.js"
+import {clientes} from "./clientes.js"
+
+
+// Funcion que crea el HTML de las tarjetas
+function generarHTMLCajas(caja) {
+    return `
+       &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;card-header&quot;&gt;
+            &lt;h3&gt;Caja Nro ${caja.numero}&lt;/h3&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;card-body&quot;&gt;
+            &lt;!-- Atendida por... --&gt;
+            &lt;p&gt;Atendida por &lt;span class=&quot;cajero&quot;&gt;${caja.cajera_o}&lt;/span&gt;&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;card-footer&quot;&gt;
+            &lt;!-- Atendiendo a... --&gt;
+            &lt;p&gt;Atendiendo a &lt;span class=&quot;cliente&quot;&gt;${caja.cliente_atendiendo ? fullName(caja.cliente_atendiendo) : 'NO'}&lt;/span&gt;&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    `
+}
+
+// Obtengo el elemento que contiene las tarjetas que representan las cajas
+const espacioParaCajas = document.querySelector('.tarjetas-banco')
+
+function actualizarHTMLCajas() {
+    // Creo el markup que voy a insertar
+    const markupCajas = cajas.map((caja) => generarHTMLCajas(caja)).join('')
+    // Inserto el markup
+    espacioParaCajas.innerHTML = markupCajas
+}
+
+actualizarHTMLCajas()
+
+// Genero el nombre en el formato "Apellido Nombre"
+function fullName(cliente) {
+    return `${cliente.apellido} ${cliente.nombre}`
+}
+
+// Funcion que crea el HTML de la cola
+function generarHTMLCola(cliente) {
+    return `
+    &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;card-footer&quot;&gt;
+            &lt;p&gt;Nro. Cliente / Nombre &lt;span&gt;${cliente.nro}: ${fullName(cliente)}&lt;/span&gt;&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    `
+}
+
+// Obtengo el elemento que contiene la cola
+const espacioParaCola = document.querySelector('.tarjetas-clientes')
+
+// Obtengo los clientes que estan esperando
+const clientesEsperando = clientes.filter((cliente) => cliente.esperando)
+
+function actualizarHTMLCola() {
+    // Creo el markup que voy a insertar
+    const markupCola = clientesEsperando.map((cliente) => generarHTMLCola(cliente)).join('')
+    // Inserto el markup
+    espacioParaCola.innerHTML = markupCola
+}
+
+actualizarHTMLCola()
+
+// Recupero el boton "siguiente"
+const botonSiguiente = document.querySelector('.siguiente')
+
+// Agrego el event listener
+botonSiguiente.addEventListener('click', (e) => {
+    e.preventDefault()
+    siguiente()
+})
+
+// Obtengo las cajas vacias
+const cajasVacias = cajas.filter((caja) => caja.cliente_atendiendo === null)
+
+// Creo una funcion para obtener numeros aleatorios
+function numeroRandom(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function siguiente() {
+    if (cajasVacias.length === 0) {
+        alert('En este momento no hay cajas disponible. Espere un momento y vuelva a intentar')
+        return
+    }
+
+    if (clientesEsperando.length === 0) {
+        alert('No hay clientes esperando para atenderse')
+        return;
+    }
+
+    const caja = cajasVacias.shift() // Elijo la primer caja disponible
+    cajas[cajas.indexOf(caja)].cliente_atendiendo = clientesEsperando.shift() // A esa caja le paso el cliente
+    actualizarHTMLCajas()
+    actualizarHTMLCola()
+    liberarCaja(caja, 1000, 2000)
+}
+
+function liberarCaja(caja, min = 5000, max = 10000) {
+    setTimeout(() => {
+        caja.cliente_atendiendo = null;
+        cajasVacias.push(caja);
+        alert(`Se liberó la caja ${caja.numero}`);
+        actualizarHTMLCajas();
+    }, numeroRandom(min, max));
+}
 
 
     </code>
 </pre>
 
-<script src="../../assets/js/"></script>
+<script type="module" src="../../assets/js/03_Async/ejercicios.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         Prism.highlightAll();
     });
 </script>
